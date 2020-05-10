@@ -1,0 +1,42 @@
+{
+  "private": false,
+  "name": "vue-simple-fb-button-login",
+  "version": "0.0.1",
+  "description": "This package is used to easily integrate the Facebook login button into VueJS.",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "scripts": {
+    "dev": "vue serve src/Login.vue",
+    "build": "bili --name index --plugin vue --vue.css false"
+  },
+  "files": [
+    "dist/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/superrandres/vue-simple-fb-button-login.git"
+  },
+  "keywords": [
+    "vuejs",
+    "facebook",
+    "login",
+    "simple",
+    "facil",
+    "easy",
+    "customize",
+    "personalizable",
+    "events"
+  ],
+  "author": "Ronald Espinoza",
+  "bugs": {
+    "url": "https://github.com/superrandres/vue-simple-fb-button-login/issues"
+  },
+  "homepage": "https://github.com/superrandres/vue-simple-fb-button-login#readme",
+  "devDependencies": {
+    "@vue/compiler-sfc": "^3.0.0-beta.10",
+    "bili": "^4.10.0",
+    "rollup-plugin-vue": "^6.0.0-alpha.10",
+    "vue": "^2.6.11",
+    "vue-template-compiler": "^2.6.11"
+  }
+}
