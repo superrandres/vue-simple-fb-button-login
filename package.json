@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "vue-simple-fb-button-login",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "This package is used to easily integrate the Facebook login button into VueJS.",
   "license": "MIT",
   "repository": {
