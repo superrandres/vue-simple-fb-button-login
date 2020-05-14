@@ -67,22 +67,27 @@ _Uso mas básico:_
 _Ejemplo usando diseño propio con Vuetify:_
 ```html
 <SimpleFBButtonLogin
-  appId='xxxxxxxxxxxxx'
+  v-if="visibleLoginFBButton"
+  appId='XXXXXXXXXXXXXXXX'
   v-slot:default="{ login }"
+  @data-profile="saveFacebookUserProfile"
+  @conectado="saveFacebookAuthResponse"
+  @empezando-login="loading = true"
+  @error="loading = false"
 >
   <v-btn
     depressed
-    color="info"
+    color="indigo"
     style="text-transform:none"
-    class="my-3"
-    block
+    class="ma-2 white--text"
     @click="login"
+    :loading="loading"
   >
-    <v-icon left>
-      fab fa-facebook-square
+    <v-icon>
+      fab fa-facebook-f
     </v-icon>
-    Entrar con Facebook
   </v-btn>
+</SimpleFBButtonLogin>
 </SimpleFBButtonLogin>
 ```
 
@@ -128,9 +133,12 @@ _Es importante que use los eventos del componente, estos le darán la informaci�
 
 _El componente cuenta con 3 eventos:_
 
-1. termina-inicializacion: Se ejecuta cuando todos los scripts del SDK de Facebook necesarios se han cargado. Respuesta vacía.
-2. conectado: Se ejecuta cuando se ha comporbado que el usuario se conectó con Facebook y que ha recibido un token de acceso a sus datos. Recibe un objeto objeto response del método getLoginStatus del API de Facebook
-3. data-profile: Este evento nos da la información del perfil de Facebook del usuario autenticado. Hace un get('/me') al API Graph de Facebook, devuelve conforma hayamos seteado el prop fieldsGet.
+1. cargo-script: Nuevo evento, se ejcuta cuando cargan fisicamente los scripts. Respuesta vacía.
+2. termina-inicializacion: Se ejecuta cuando FB.init y FB.AppEvents.logPageView() del SDK de Facebook se han ejecutado correctamente. Respuesta vacía.
+3. empezando-login: Se ejecuta inmediatamente cuando se llama al método login del slot.
+4. conectado: Se ejecuta cuando se ha comprobado que el usuario se conectó con Facebook y que ha recibido un token de acceso a sus datos. Responde un objeto response del método FB.login del API de Facebook.
+5. data-profile: Este evento nos da la información del perfil de Facebook del usuario autenticado. Hace un get('/me') al FB.api del API Graph de Facebook, responde conforme hayamos configurado el prop fieldsGet.
+6. error: El metodo se ejecuta cuando en el componente ocurre un error, como por ejemplo que haya cerrado la ventana de login de facbook manualmente. Responde un objeto tipo Error.
 
 ## Construido con 🛠️
 

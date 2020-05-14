@@ -6,7 +6,7 @@
   </span>
 </template>
 <script>
-import './config'
+import loadApi from './config'
 export default {
   name: 'SimpleFBButtonLogin',
   props: {
@@ -49,27 +49,34 @@ export default {
   }),
   methods: {
     fbAsyncInit () {
-      window.FB.init({
-        appId: this.appId,
-        cookie: true,
-        xfbml: true,
-        version: 'v7.0'
-      })
-      window.FB.AppEvents.logPageView()
-      this.FBInicializado = true
-      this.$emit('termina-inicializacion')
-    },
-    checkLoginState () {
-      window.FB.getLoginStatus(this.getLoginStatusFB)
+      try {
+        window.FB.init({
+          appId: this.appId,
+          cookie: true,
+          xfbml: true,
+          version: 'v7.0'
+        })
+        window.FB.AppEvents.logPageView()
+        this.FBInicializado = true
+        this.$emit('termina-inicializacion')
+      } catch (err) {
+        this.$emit('error', err)
+      }
     },
     saveProfileData (response) {
-      this.profileDataFB = response
-      this.$emit('data-profile', response)
+      if (!response || response.error) {
+        this.$emit('error', response.error)
+      } else {
+        this.profileDataFB = response
+        this.$emit('data-profile', response)
+      }
     },
     getLoginStatusFB (response) {
       if (response.status === 'connected') {
         this.logeadoConFB = true
         this.$emit('conectado', response)
+      } else {
+        this.$emit('error', response)
       }
       this.statusFB = response
     },
@@ -87,11 +94,11 @@ export default {
       }
     },
     login () {
+      this.$emit('empezando-login')
       window.FB.login(this.handleResponseLoginFB, this.oAuthFB)
     }
   },
   created () {
-    window.fbAsyncInit = this.fbAsyncInit
     const path = this.$route ? this.$route.path : 'https://www.facebook.com/connect/login_success.html'
     this.oAuthFB = {
       client_id: this.appId,
@@ -100,12 +107,13 @@ export default {
       response_type: 'granted_scopes'
     }
   },
-  watch: {
-    FBInicializado (newVal) {
-      if (newVal) {
-        window.FB.getLoginStatus(this.getLoginStatusFB)
-      }
-    }
+  mounted () {
+    loadApi().then(() => {
+      this.$emit('cargo-script')
+      window.fbAsyncInit = this.fbAsyncInit
+    }).catch(err => {
+      this.$emit('error', err)
+    })
   }
 }
 </script>

@@ -1,7 +1,14 @@
-(function (d, s, id) {
-  var js; var fjs = d.getElementsByTagName(s)[0]
-  if (d.getElementById(id)) { return }
-  js = d.createElement(s); js.id = id
-  js.src = 'https://connect.facebook.net/en_US/sdk.js'
-  fjs.parentNode.insertBefore(js, fjs)
-}(document, 'script', 'facebook-jssdk'))
+export default () => {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script')
+    script.onload = () => {
+      resolve(true)
+    }
+    script.onerror = (err) => {
+      reject(err)
+    }
+    script.async = true
+    script.src = 'https://connect.facebook.net/en_US/sdk.js'
+    document.head.appendChild(script)
+  })
+}

@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "vue-simple-fb-button-login",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "This package is used to easily integrate the Facebook login button into VueJS.",
   "license": "MIT",
   "repository": {
@@ -31,8 +31,7 @@
     "./sfc": "src/SimpleFBButtonLogin.vue"
   },
   "files": [
-    "dist/*",
-    "src/*"
+    "dist/*"
   ],
   "scripts": {
     "build": "npm run build:unpkg & npm run build:es & npm run build:umd",
